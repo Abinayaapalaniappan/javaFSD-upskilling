@@ -1,0 +1,66 @@
+import java.io.*;
+import java.net.*;
+public class TCPChatServer {
+    public static void main(String[] args) {
+        int serverPort = 12345;  
+        try (ServerSocket serverSocket = new ServerSocket(serverPort)) {
+            System.out.println("Server started. Waiting for client...");
+            try (Socket clientSocket = serverSocket.accept()) {
+                System.out.println("Client connected: " + clientSocket.getInetAddress());
+                BufferedReader inputReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter outputWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+                String receivedMessage, messageToClient;
+                Thread clientListener = new Thread(() -> {
+                    try {
+                        String clientMsg;
+                        while ((clientMsg = inputReader.readLine()) != null) {
+                            System.out.println("Client: " + clientMsg);
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Connection closed.");
+                    }
+                });
+                clientListener.start();
+                while ((messageToClient = consoleReader.readLine()) != null) {
+                    outputWriter.println(messageToClient);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+import java.io.*;
+import java.net.*;
+public class TCPChatClient {
+    public static void main(String[] args) {
+        String serverHost = "localhost";
+        int serverPort = 12345;
+        try (Socket socket = new Socket(serverHost, serverPort)) {
+            System.out.println("Connected to server");
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            String receivedMessage, messageToServer;
+            Thread serverListener = new Thread(() -> {
+                try {
+                    String serverMsg;
+                    while ((serverMsg = inputReader.readLine()) != null) {
+                        System.out.println("Server: " + serverMsg);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Connection closed.");
+                }
+            });
+            serverListener.start();
+            while ((messageToServer = consoleReader.readLine()) != null) {
+                outputWriter.println(messageToServer);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
