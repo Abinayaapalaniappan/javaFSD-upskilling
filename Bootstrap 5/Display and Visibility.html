@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Display Utilities</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container mt-4">
+  <h2>Responsive Display</h2>
+
+  <div class="alert alert-info d-block d-md-none">
+    This is only visible on small screens (mobile).
+  </div>
+
+  <div class="alert alert-success d-none d-md-block d-lg-none">
+    This is only visible on medium screens (tablet).
+  </div>
+
+  <div class="alert alert-primary d-none d-lg-flex">
+    This is only visible on large screens (desktop and up).
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Responsive Sidebar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .sidebar {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar (hidden on small screens) -->
+    <div class="col-md-3 bg-dark text-white p-4 d-none d-md-block sidebar">
+      <h4>Sidebar</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a href="#" class="nav-link text-white">Dashboard</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">Settings</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="col-md-9 col-12 p-4">
+      <h2>Main Content Area</h2>
+      <p>This content is always visible. The sidebar appears on tablets and larger devices.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
