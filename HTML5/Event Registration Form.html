@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Event Registration Form</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #f5f7fa;
+    color: #222;
+  }
+
+  h2 {
+    text-align: center;
+    color: #004085;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+
+  form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 8px rgb(0 123 255 / 0.3);
+  }
+
+  select {
+    appearance: none;
+    background: url('data:image/svg+xml;charset=US-ASCII,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 1rem center;
+    background-size: 1em;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover,
+  button:focus {
+    background-color: #0056b3;
+    outline: none;
+  }
+
+  output {
+    display: block;
+    margin-top: 1.5rem;
+    font-weight: 700;
+    color: #28a745;
+    font-size: 1.1rem;
+    text-align: center;
+    min-height: 2em;
+  }
+
+  .error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<h2>Event Registration Form</h2>
+
+<form id="registrationForm" novalidate>
+  <label for="name">Full Name:</label>
+  <input type="text" id="name" name="name" placeholder="Enter your full name" required autofocus />
+  <div class="error-message" id="nameError"></div>
+
+  <label for="email">Email Address:</label>
+  <input type="email" id="email" name="email" placeholder="example@domain.com" required />
+  <div class="error-message" id="emailError"></div>
+
+  <label for="eventDate">Event Date:</label>
+  <input type="date" id="eventDate" name="eventDate" required min="" />
+  <div class="error-message" id="dateError"></div>
+
+  <label for="eventType">Event Type:</label>
+  <select id="eventType" name="eventType" required>
+    <option value="" disabled selected>Select an event</option>
+    <option value="community-picnic">Community Picnic</option>
+    <option value="charity-run">Charity Run</option>
+    <option value="art-fair">Art Fair</option>
+    <option value="music-festival">Music Festival</option>
+  </select>
+  <div class="error-message" id="eventTypeError"></div>
+
+  <label for="message">Additional Comments:</label>
+  <textarea id="message" name="message" placeholder="Any special requirements or questions?"></textarea>
+
+  <button type="submit">Register Now</button>
+
+  <output id="confirmation" for="registrationForm"></output>
+</form>
+
+<script>
+  const form = document.getElementById('registrationForm');
+  const output = document.getElementById('confirmation');
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const dateError = document.getElementById('dateError');
+  const eventTypeError = document.getElementById('eventTypeError');
+  const eventDateInput = document.getElementById('eventDate');
+  eventDateInput.min = new Date().toISOString().split('T')[0];
+  function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+    [nameError, emailError, dateError, eventTypeError].forEach(el => el.textContent = '');
+    output.textContent = '';
+    if (!form.name.value.trim()) {
+      nameError.textContent = 'Please enter your full name.';
+      valid = false;
+    }
+    if (!form.email.value.trim()) {
+      emailError.textContent = 'Email address is required.';
+      valid = false;
+    } else if (!isValidEmail(form.email.value.trim())) {
+      emailError.textContent = 'Please enter a valid email address.';
+      valid = false;
+    }
+    if (!form.eventDate.value) {
+      dateError.textContent = 'Please select an event date.';
+      valid = false;
+    } else if (new Date(form.eventDate.value) < new Date(eventDateInput.min)) {
+      dateError.textContent = 'Event date cannot be in the past.';
+      valid = false;
+    }
+    if (!form.eventType.value) {
+      eventTypeError.textContent = 'Please select an event type.';
+      valid = false;
+    }
+
+    if (!valid) return;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const date = form.eventDate.value;
+    const eventType = form.eventType.options[form.eventType.selectedIndex].text;
+
+    output.textContent = `Thank you, ${name}! You are registered for the "${eventType}" event on ${date}. A confirmation has been sent to ${email}.`;
+    
+    form.reset();
+    form.name.focus();
+  });
+</script>
+
+</body>
+</html>

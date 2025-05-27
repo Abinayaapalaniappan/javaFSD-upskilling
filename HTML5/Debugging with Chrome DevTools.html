@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Debugging Practice</title>
+<style>
+  /* Clean and simple styling with responsive layout */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px auto;
+    max-width: 600px;
+    background-color: #eef5ff;
+    padding: 20px;
+  }
+  h1 {
+    color: #1a237e;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  #debugBox {
+    border: 2px solid #333;
+    padding: 20px;
+    background: #fff;
+    width: 90%;
+    max-width: 560px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  #debugBox:hover {
+    border-color: #1a237e;
+    box-shadow: 0 6px 15px rgba(26, 35, 126, 0.4);
+  }
+  button {
+    display: block;
+    margin: 30px auto;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background-color: #1a237e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(26, 35, 126, 0.4);
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #3949ab;
+  }
+  #message {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #0d47a1;
+  }
+</style>
+</head>
+<body>
+
+<h1>Debugging with Chrome DevTools</h1>
+
+<div id="debugBox">
+  <p>Try modifying my style via Inspect Element (e.g., hover effects or colors) and watch the smooth transitions.</p>
+  <p id="message"></p>
+</div>
+
+<button id="testBtn" title="Click to run the debugging script">Run Script</button>
+
+<script>
+  console.log('Page loaded — script ready.');
+
+  function calculateSum(a, b) {
+    console.log(`Calculating sum: ${a} + ${b}`);
+    let sum = a + b;
+    return sum;
+  }
+
+  document.getElementById('testBtn').addEventListener('click', () => {
+    console.log('Button clicked — starting calculation.');
+
+    let x = 5;
+    let y = 10;
+    let result = calculateSum(x, y);
+
+    document.getElementById('message').textContent = `Sum is: ${result}`;
+    console.log('Result displayed in page:', result);
+    try {
+      nonExistentFunction();
+    } catch (err) {
+      console.error('Caught an error as expected:', err);
+    }
+  });
+</script>
+
+</body>
+</html>

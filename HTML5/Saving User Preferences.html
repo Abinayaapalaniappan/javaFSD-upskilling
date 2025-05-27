@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>User Event Preferences</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 420px;
+    margin: 2rem auto;
+    padding: 1.2rem;
+    background: #f0f4f8;
+    color: #222;
+  }
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  select, button {
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
+    width: 100%;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    transition: border-color 0.3s ease;
+  }
+  select:focus, button:focus {
+    border-color: #1d8feb;
+    outline: none;
+  }
+  button {
+    background-color: #1d8feb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  button:hover {
+    background-color: #1769c1;
+  }
+  #notification {
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  #notification.show {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<h2>Select Your Preferred Event Type</h2>
+
+<label for="eventType">Event Type:</label>
+<select id="eventType" aria-describedby="notification">
+  <option value="" disabled selected>Select an event</option>
+  <option value="community-picnic">Community Picnic</option>
+  <option value="charity-run">Charity Run</option>
+  <option value="art-fair">Art Fair</option>
+  <option value="music-festival">Music Festival</option>
+</select>
+
+<button id="clearPrefs" type="button">Clear Preferences</button>
+
+<div id="notification" role="alert" aria-live="polite"></div>
+
+<script>
+  const eventTypeSelect = document.getElementById('eventType');
+  const clearButton = document.getElementById('clearPrefs');
+  const notification = document.getElementById('notification');
+  let notificationTimeout;
+  function showNotification(message) {
+    clearTimeout(notificationTimeout);
+    notification.textContent = message;
+    notification.classList.add('show');
+    notificationTimeout = setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3000);
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedEvent = localStorage.getItem('preferredEvent');
+    if (savedEvent) {
+      eventTypeSelect.value = savedEvent;
+      showNotification(`Loaded your saved preference: "${formatEventName(savedEvent)}"`);
+      sessionStorage.setItem('preferredEventSession', savedEvent);
+    }
+  });
+  eventTypeSelect.addEventListener('change', () => {
+    const selected = eventTypeSelect.value;
+    if (selected) {
+      localStorage.setItem('preferredEvent', selected);
+      sessionStorage.setItem('preferredEventSession', selected);
+      showNotification(`Preference saved: "${formatEventName(selected)}"`);
+    }
+  });
+  clearButton.addEventListener('click', () => {
+    localStorage.removeItem('preferredEvent');
+    sessionStorage.removeItem('preferredEventSession');
+    eventTypeSelect.value = '';
+    showNotification('Preferences cleared!');
+  });
+  function formatEventName(value) {
+    return value
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+</script>
+
+</body>
+</html>

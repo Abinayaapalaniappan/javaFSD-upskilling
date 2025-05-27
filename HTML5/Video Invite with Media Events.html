@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Event Promo Video with Unsaved Changes Warning</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 1.2rem;
+    background: #fefefe;
+    text-align: center;
+    color: #222;
+  }
+  #videoMessage {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #2a9d8f;
+  }
+  form {
+    margin-top: 2rem;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f1f5f9;
+    padding: 1.5rem 1.8rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus {
+    border-color: #2a9d8f;
+    outline: none;
+  }
+  button {
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #237a74;
+  }
+</style>
+</head>
+<body>
+
+<h2>Event Promo Video</h2>
+
+<video id="promoVideo" width="600" controls>
+  <source src="promo.mp4" type="video/mp4" />
+  Sorry, your browser does not support embedded videos.
+</video>
+
+<div id="videoMessage" aria-live="polite"></div>
+
+<form id="rsvpForm" novalidate>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" placeholder="Your name" required autofocus autocomplete="off" />
+  
+  <button type="submit">Submit RSVP</button>
+</form>
+
+<script>
+  const video = document.getElementById('promoVideo');
+  const message = document.getElementById('videoMessage');
+  const form = document.getElementById('rsvpForm');
+  const nameInput = document.getElementById('name');
+
+  let formModified = false;
+  let formSubmitted = false;
+  video.addEventListener('canplay', () => {
+    message.textContent = ' Video is ready to play!';
+  });
+  form.addEventListener('input', () => {
+    if (!formSubmitted) {
+      formModified = true;
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!nameInput.value.trim()) {
+      alert('Please enter your name before submitting.');
+      nameInput.focus();
+      return;
+    }
+
+    formSubmitted = true;
+    formModified = false;
+
+    alert(`Thanks for your RSVP, ${nameInput.value.trim()}!`);
+    form.reset();
+    message.textContent = ''; // Clear any previous messages
+    nameInput.focus();
+  });
+
+  window.addEventListener('beforeunload', (e) => {
+    if (formModified && !formSubmitted) {
+      e.preventDefault();
+      e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+      return e.returnValue;
+    }
+  });
+</script>
+
+</body>
+</html>

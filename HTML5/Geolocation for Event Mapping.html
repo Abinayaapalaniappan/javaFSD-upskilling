@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nearby Events Locator</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 420px;
+    margin: 2rem auto;
+    padding: 1.2rem;
+    background: #eef3f8;
+    text-align: center;
+    color: #222;
+  }
+  button {
+    padding: 0.7rem 1.5rem;
+    font-size: 1.15rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    background-color: #1e90ff;
+    color: white;
+    box-shadow: 0 4px 8px rgba(30,144,255,0.3);
+    transition: background-color 0.3s ease;
+  }
+  button:hover:not(:disabled) {
+    background-color: #1366d6;
+  }
+  button:disabled {
+    background-color: #a0c4ff;
+    cursor: not-allowed;
+  }
+  #output {
+    margin-top: 2rem;
+    font-size: 1.15rem;
+    min-height: 100px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #333;
+  }
+  .error {
+    color: #cc0000;
+    font-weight: 600;
+  }
+  .spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #999;
+    border-top-color: #1e90ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  ul.events-list {
+    text-align: left;
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+    color: #444;
+  }
+  ul.events-list li {
+    margin-bottom: 0.5rem;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<h2>Find Nearby Events</h2>
+
+<button id="findBtn">Find Nearby Events</button>
+
+<div id="output"></div>
+
+<script>
+  const btn = document.getElementById('findBtn');
+  const output = document.getElementById('output');
+
+  btn.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      output.innerHTML = '<span class="error">Sorry, your browser does not support geolocation.</span>';
+      return;
+    }
+
+    btn.disabled = true;
+    output.innerHTML = 'Locating<span class="spinner"></span>';
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    });
+  });
+
+  function onSuccess(position) {
+    btn.disabled = false;
+    const lat = position.coords.latitude.toFixed(5);
+    const lon = position.coords.longitude.toFixed(5);
+
+    output.innerHTML = `
+      <strong>Coordinates Found:</strong><br>
+      Latitude: ${lat}<br>
+      Longitude: ${lon}<br><br>
+      <strong>Nearby Events You Might Like:</strong>
+      <ul class="events-list">
+        ${generateMockEvents(lat, lon).map(event => `<li>${event}</li>`).join('')}
+      </ul>
+    `;
+  }
+
+  function onError(err) {
+    btn.disabled = false;
+    let message = '';
+
+    switch (err.code) {
+      case err.PERMISSION_DENIED:
+        message = 'Permission denied: Please enable location access in your browser settings.';
+        break;
+      case err.POSITION_UNAVAILABLE:
+        message = 'Location unavailable: Try moving to an open area or check your connection.';
+        break;
+      case err.TIMEOUT:
+        message = 'Timeout: The request took too long. Please try again.';
+        break;
+      default:
+        message = `Error: ${err.message}`;
+    }
+
+    output.innerHTML = `<span class="error">${message}</span>`;
+  }
+  function generateMockEvents(lat, lon) {
+    const baseEvents = [
+      'Community Picnic at Central Park',
+      'Charity Run by Riverside',
+      'Local Art Fair Downtown',
+      'Summer Music Festival on the Beach',
+      'Food Truck Fiesta',
+      'Outdoor Yoga Session',
+      'Farmers Market Extravaganza'
+    ];
+    let shuffled = baseEvents.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Community Events Gallery</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fafafa;
+            color: #333;
+            margin: 1.5rem;
+        }
+
+        h2 {
+            text-align: center;
+            color: #004085;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 20px 25px;
+            text-align: center;
+            table-layout: fixed;
+        }
+
+        caption {
+            caption-side: top;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.3em;
+            color: #0056b3;
+            letter-spacing: 1px;
+        }
+
+        td {
+            vertical-align: top;
+            background: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 3px 7px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        td:hover,
+        td:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+        }
+
+        figure {
+            margin: 0;
+        }
+
+        .event-image {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            border-radius: 12px;
+            border: 4px solid #004085;
+            box-shadow: 0 4px 10px rgb(0 64 133 / 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .event-image:hover,
+        .event-image:focus {
+            transform: scale(1.05);
+            outline: 3px solid #ffc107;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-style: italic;
+            font-size: 0.9em;
+            color: #555;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Community Events Gallery</h2>
+
+    <table>
+        <caption>Highlights from Our Past Events</caption>
+        <tr>
+            <td tabindex="0">
+                <figure>
+                    <img src="event1.jpg" alt="Community Picnic with families enjoying outdoor games" title="Community Picnic 2024" class="event-image" />
+                    <figcaption>Community Picnic - June 2024</figcaption>
+                </figure>
+            </td>
+            <td tabindex="0">
+                <figure>
+                    <img src="event2.jpg" alt="Runners participating in the Charity Run event" title="Charity Run 2024" class="event-image" />
+                    <figcaption>Charity Run - April 2024</figcaption>
+                </figure>
+            </td>
+            <td tabindex="0">
+                <figure>
+                    <img src="event3.jpg" alt="Colorful stalls and visitors at the Annual Art Fair" title="Annual Art Fair" class="event-image" />
+                    <figcaption>Annual Art Fair - March 2024</figcaption>
+                </figure>
+            </td>
+        </tr>
+        <tr>
+            <td tabindex="0">
+                <figure>
+                    <img src="event4.jpg" alt="Live band performing at the Summer Music Festival" title="Summer Music Festival" class="event-image" />
+                    <figcaption>Summer Music Festival - July 2024</figcaption>
+                </figure>
+            </td>
+            <td tabindex="0">
+                <figure>
+                    <img src="event5.jpg" alt="Group discussion during the Monthly Book Club Meeting" title="Monthly Book Club" class="event-image" />
+                    <figcaption>Book Club Meeting - May 2024</figcaption>
+                </figure>
+            </td>
+            <td tabindex="0">
+                <figure>
+                    <img src="event6.jpg" alt="Crowd enjoying food from trucks at the Food Truck Rally" title="Food Truck Rally 2024" class="event-image" />
+                    <figcaption>Food Truck Rally - August 2024</figcaption>
+                </figure>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

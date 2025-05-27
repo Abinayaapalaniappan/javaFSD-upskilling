@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Navigation and Linking Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0 1rem;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        nav {
+            background: #004080;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 0.75rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: #ffcc00;
+            outline: none;
+        }
+
+        main section {
+            background: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: #222;
+            color: #eee;
+            font-size: 0.9rem;
+            border-top: 3px solid #004080;
+        }
+    </style>
+</head>
+<body>
+    <nav role="navigation" aria-label="Primary Navigation">
+        <a href="#home" aria-current="page">Home</a> |
+        <a href="#events">Events</a> |
+        <a href="#contact">Contact</a> |
+        <a href="help.html" target="_blank" rel="noopener noreferrer">Help</a>
+    </nav>
+    <main id="main-content" tabindex="-1">
+        <section id="home" aria-label="Home Section">
+            <h1>Welcome to the Home Section</h1>
+            <p>Explore the latest updates and announcements here.</p>
+        </section>
+
+        <section id="events" aria-label="Events Section">
+            <h1>Upcoming Events</h1>
+            <p>Stay informed about our upcoming events and activities.</p>
+        </section>
+
+        <section id="contact" aria-label="Contact Section">
+            <h1>Get in Touch</h1>
+            <p>Contact us via email, phone, or visit our office.</p>
+        </section>
+    </main>
+    <footer role="contentinfo">
+        <p>&copy; 2025 Your Portal Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>
