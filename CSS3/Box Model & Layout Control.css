@@ -1,0 +1,22 @@
+.eventCard {
+    border: 2.5px solid #388E3C;       
+    padding: 24px 28px;                
+    margin: 20px 0;                    
+    border-radius: 12px;               
+    background-color: #f9fdf9;         
+    box-shadow: 0 6px 12px rgba(56, 142, 60, 0.15); 
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.eventCard:hover {
+    box-shadow: 0 12px 24px rgba(56, 142, 60, 0.3);
+    transform: translateY(-4px);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;  
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.4); 
+    border-color: #0056b3;           
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 6px;
+}

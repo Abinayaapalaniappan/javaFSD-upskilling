@@ -1,0 +1,44 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+thead {
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+th, td {
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f9f6;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9em;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+.status.confirmed {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.pending {
+  background-color: #ffb74d;
+  color: #663c00;
+}

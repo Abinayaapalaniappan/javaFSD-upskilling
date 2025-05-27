@@ -1,0 +1,22 @@
+.news-article {
+    column-count: 2;               
+    column-gap: 36px;              
+    column-rule: 2px dotted #888; 
+    padding: 24px 28px;
+    font-family: 'Merriweather', Georgia, serif; 
+    font-size: 17px;
+    line-height: 1.75;
+    color: #2c2c2c;                
+    background-color: #fafafa;    
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    max-width: 900px;
+    margin: 30px auto;
+}
+@media (max-width: 700px) {
+    .news-article {
+        column-count: 1;
+        padding: 20px;
+        column-rule: none;
+    }
+}
